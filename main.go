@@ -3,26 +3,33 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/nostracode/mangrove-api/config/db/conn"
+	rolecontroller "github.com/nostracode/mangrove-api/controller/role_controller"
+	"github.com/nostracode/mangrove-api/helper"
+	rolerepo "github.com/nostracode/mangrove-api/repository/role_repo"
+	roleservice "github.com/nostracode/mangrove-api/service/role_service"
 )
 
 func main() {
+
+	db := conn.NewDatabase()
+
+	//Role
+	roleRepo := rolerepo.NewRoleRepository()
+	roleService := roleservice.NewRoleService(roleRepo, db)
+	roleController := rolecontroller.NewRoleController(roleService)
+
 	// Create a new Fiber instance
 	app := fiber.New()
 
-	// Define a route for the root path
-	app.Get("/api", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, Mangrove!")
-	})
-
-	// Define a route for an API endpoint
-	app.Get("/api/greet/:name", func(c *fiber.Ctx) error {
-		name := c.Params("name")
-		return c.JSON(fiber.Map{"message": "Hello, " + name + "!"})
-	})
+	//Endpoint Of Role
+	app.Post("/api/roles", roleController.Create)
+	app.Get("/api/roles", roleController.FindAll)
+	app.Get("/api/roles/:roleId", roleController.FindById)
+	app.Put("/api/roles/:roleId", roleController.Update)
+	app.Delete("/api/roles/:roleId", roleController.Delete)
 
 	// Start the Fiber app on port 3030
 	err := app.Listen(":3030")
-	if err != nil {
-		panic(err)
-	}
+	helper.PanicIfError(err)
 }
