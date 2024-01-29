@@ -55,7 +55,7 @@ func (repository *RoleRepositoryImpl) FindByUID(ctx context.Context, db *gorm.DB
 	role := domain.Role{}
 	err := db.First(&role, "uid = ?", roleId).Error
 	if err != nil {
-		return nil, errors.New("user not found")
+		return nil, errors.New("role not found")
 	}
 
 	return &role, nil
@@ -71,5 +71,17 @@ func (repository *RoleRepositoryImpl) FindAll(ctx context.Context, db *gorm.DB) 
 	}
 
 	return role, nil
+
+}
+
+func (repository *RoleRepositoryImpl) FindByName(ctx context.Context, db *gorm.DB, name string) (*domain.Role, error) {
+
+	user := domain.Role{}
+	err := db.First(&user, "name = ?", name).Error
+	if err == nil {
+		return nil, errors.New("role name already create")
+	}
+
+	return &user, nil
 
 }
