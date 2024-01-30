@@ -18,8 +18,8 @@ func NewRoleRepository() RoleRepository {
 
 func (repository *RoleRepositoryImpl) Save(ctx context.Context, db *gorm.DB, role *domain.Role) (*domain.Role, error) {
 
-	// err := db.Omit("UID").Create(&role).Error
-	err := db.Omit("UID").Clauses(clause.Returning{}).Select("name").Create(&role).Error
+	// err := db.Omit("ID").Create(&role).Error
+	err := db.Omit("ID").Clauses(clause.Returning{}).Select("name").Create(&role).Error
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (repository *RoleRepositoryImpl) Delete(ctx context.Context, db *gorm.DB, r
 func (repository *RoleRepositoryImpl) FindByID(ctx context.Context, db *gorm.DB, roleId string) (*domain.Role, error) {
 
 	role := domain.Role{}
-	err := db.First(&role, "uid = ?", roleId).Error
+	err := db.First(&role, "ID = ?", roleId).Error
 	if err != nil {
 		return nil, errors.New("role not found")
 	}

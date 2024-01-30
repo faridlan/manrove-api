@@ -3,7 +3,7 @@ package userweb
 import "gorm.io/gorm"
 
 type UserResponse struct {
-	UID         string         `json:"uid,omitempty"`
+	ID          string         `json:"id,omitempty"`
 	Email       string         `json:"email,omitempty"`
 	Name        string         `json:"name,omitempty"`
 	PhoneNumber string         `json:"phone_number,omitempty"`

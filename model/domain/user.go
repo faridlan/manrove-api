@@ -3,9 +3,10 @@ package domain
 import "gorm.io/gorm"
 
 type User struct {
-	UID         string         `gorm:"primarykey;column:uid;<-:create"`
+	ID          string         `gorm:"primarykey;column:id;<-:create"`
 	Email       string         `gorm:"column:email"`
 	Name        string         `gorm:"column:name"`
+	Password    string         `gorm:"column:password"`
 	PhoneNumber string         `gorm:"column:phone_number"`
 	RoleId      string         `gorm:"column:role_id"`
 	ImageUrl    string         `gorm:"column:image_url"`
