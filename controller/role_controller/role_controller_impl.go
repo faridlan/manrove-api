@@ -86,14 +86,14 @@ func (controller *RoleControllerImpl) FindById(ctx *fiber.Ctx) error {
 
 	id := ctx.Params("roleId")
 
-	user, err := controller.RoleService.FindById(ctx.Context(), id)
+	role, err := controller.RoleService.FindById(ctx.Context(), id)
 	if err != nil {
 		return err
 	}
 	webReponse := web.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   user,
+		Data:   role,
 	}
 
 	return ctx.JSON(webReponse)
@@ -102,14 +102,14 @@ func (controller *RoleControllerImpl) FindById(ctx *fiber.Ctx) error {
 
 func (controller *RoleControllerImpl) FindAll(ctx *fiber.Ctx) error {
 
-	users, err := controller.RoleService.FindAll(ctx.Context())
+	roles, err := controller.RoleService.FindAll(ctx.Context())
 	if err != nil {
 		return err
 	}
 	webReponse := web.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   users,
+		Data:   roles,
 	}
 
 	return ctx.JSON(webReponse)

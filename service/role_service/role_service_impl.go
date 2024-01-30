@@ -38,18 +38,18 @@ func (service *RoleServiceImpl) Create(ctx context.Context, request *roleweb.Rol
 	tx := service.DB.Begin()
 	defer tx.Rollback()
 
-	user := &domain.Role{
+	role := &domain.Role{
 		Name: request.Name,
 	}
 
-	_, err = service.RoleRepo.FindByName(ctx, tx, user.Name)
+	_, err = service.RoleRepo.FindByName(ctx, tx, role.Name)
 	if err != nil {
 		return nil, &exception.ConflictError{
 			Message: err.Error(),
 		}
 	}
 
-	response, err := service.RoleRepo.Save(ctx, tx, user)
+	response, err := service.RoleRepo.Save(ctx, tx, role)
 
 	if err == nil {
 		tx.Commit()
@@ -80,7 +80,6 @@ func (service *RoleServiceImpl) Update(ctx context.Context, request *roleweb.Rol
 	}
 
 	role.Name = request.Name
-	// user.Password = request.Password
 
 	role, err = service.RoleRepo.Update(ctx, tx, role)
 
@@ -94,12 +93,12 @@ func (service *RoleServiceImpl) Update(ctx context.Context, request *roleweb.Rol
 
 }
 
-func (service *RoleServiceImpl) Delete(ctx context.Context, userId string) error {
+func (service *RoleServiceImpl) Delete(ctx context.Context, roleId string) error {
 
 	tx := service.DB.Begin()
 	defer tx.Rollback()
 
-	role, err := service.RoleRepo.FindByID(ctx, tx, userId)
+	role, err := service.RoleRepo.FindByID(ctx, tx, roleId)
 	if err != nil {
 		return &exception.NotFoundError{
 			Message: err.Error(),
@@ -117,9 +116,9 @@ func (service *RoleServiceImpl) Delete(ctx context.Context, userId string) error
 
 }
 
-func (service *RoleServiceImpl) FindById(ctx context.Context, userId string) (*roleweb.RoleResponse, error) {
+func (service *RoleServiceImpl) FindById(ctx context.Context, roleId string) (*roleweb.RoleResponse, error) {
 
-	user, err := service.RoleRepo.FindByID(ctx, service.DB, userId)
+	role, err := service.RoleRepo.FindByID(ctx, service.DB, roleId)
 
 	if err != nil {
 		return nil, &exception.NotFoundError{
@@ -127,17 +126,17 @@ func (service *RoleServiceImpl) FindById(ctx context.Context, userId string) (*r
 		}
 	}
 
-	return model.ToRoleResponse(user), nil
+	return model.ToRoleResponse(role), nil
 
 }
 
 func (service *RoleServiceImpl) FindAll(ctx context.Context) ([]*roleweb.RoleResponse, error) {
 
-	users, err := service.RoleRepo.FindAll(ctx, service.DB)
+	roles, err := service.RoleRepo.FindAll(ctx, service.DB)
 	if err != nil {
 		return nil, err
 	}
 
-	return model.ToRoleResponses(users), nil
+	return model.ToRoleResponses(roles), nil
 
 }

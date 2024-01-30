@@ -76,12 +76,12 @@ func (repository *RoleRepositoryImpl) FindAll(ctx context.Context, db *gorm.DB) 
 
 func (repository *RoleRepositoryImpl) FindByName(ctx context.Context, db *gorm.DB, name string) (*domain.Role, error) {
 
-	user := domain.Role{}
-	err := db.First(&user, "name = ?", name).Error
+	role := domain.Role{}
+	err := db.First(&role, "name = ?", name).Error
 	if err == nil {
 		return nil, errors.New("role name already create")
 	}
 
-	return &user, nil
+	return &role, nil
 
 }

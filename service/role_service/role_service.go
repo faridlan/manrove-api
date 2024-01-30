@@ -9,7 +9,7 @@ import (
 type RoleService interface {
 	Create(ctx context.Context, request *roleweb.RoleCreateReq) (*roleweb.RoleResponse, error)
 	Update(ctx context.Context, request *roleweb.RoleUpdateReq) (*roleweb.RoleResponse, error)
-	Delete(ctx context.Context, userId string) error
-	FindById(ctx context.Context, userId string) (*roleweb.RoleResponse, error)
+	Delete(ctx context.Context, roleId string) error
+	FindById(ctx context.Context, roleId string) (*roleweb.RoleResponse, error)
 	FindAll(ctx context.Context) ([]*roleweb.RoleResponse, error)
 }
