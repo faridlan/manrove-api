@@ -1,6 +1,6 @@
 CREATE TABLE
     role (
-        uid VARCHAR DEFAULT
+        id VARCHAR DEFAULT
         REPLACE (
                 uuid_generate_v4():: text,
                 '-',

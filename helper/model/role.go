@@ -7,7 +7,7 @@ import (
 
 func ToRoleResponse(role *domain.Role) *roleweb.RoleResponse {
 	return &roleweb.RoleResponse{
-		UID:       role.UID,
+		ID:        role.ID,
 		Name:      role.Name,
 		CreatedAt: role.CreatedAt,
 		UpdatedAt: role.UpdatedAt,

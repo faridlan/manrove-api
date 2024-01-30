@@ -93,7 +93,7 @@ func TestFindByIdRoleController(t *testing.T) {
 	roleResponse, _ := Create()
 	app.Get("/roles/:roleId", controller.FindById)
 
-	request := httptest.NewRequest("GET", fmt.Sprintf("/roles/%s", roleResponse.UID), nil)
+	request := httptest.NewRequest("GET", fmt.Sprintf("/roles/%s", roleResponse.ID), nil)
 	response, err := app.Test(request)
 	assert.Nil(t, err)
 
@@ -139,7 +139,7 @@ func TestDeleteController(t *testing.T) {
 	rolesResponse, _ := Create()
 	app.Delete("/roles/:roleId", controller.Delete)
 
-	request := httptest.NewRequest("DELETE", fmt.Sprintf("/roles/%s", rolesResponse.UID), nil)
+	request := httptest.NewRequest("DELETE", fmt.Sprintf("/roles/%s", rolesResponse.ID), nil)
 	response, err := app.Test(request)
 	assert.Nil(t, err)
 
@@ -169,7 +169,7 @@ func TestUpdateController(t *testing.T) {
 		}`,
 	)
 
-	request := httptest.NewRequest("PUT", fmt.Sprintf("/roles/%s", roleResponse.UID), body)
+	request := httptest.NewRequest("PUT", fmt.Sprintf("/roles/%s", roleResponse.ID), body)
 	request.Header.Set("content-type", "application/json")
 	response, err := app.Test(request)
 	if err != nil {
@@ -195,7 +195,7 @@ func TestUpdateControllerFailed(t *testing.T) {
 		}`,
 	)
 
-	request := httptest.NewRequest("PUT", fmt.Sprintf("/roles/%s", roleResponse.UID), body)
+	request := httptest.NewRequest("PUT", fmt.Sprintf("/roles/%s", roleResponse.ID), body)
 	request.Header.Set("content-type", "application/json")
 	response, err := app.Test(request)
 	if err != nil {

@@ -29,7 +29,7 @@ func TestFindByIdRoleService(t *testing.T) {
 
 	Truncate()
 	roleResponse, _ := Create()
-	role, err := service.FindById(context.Background(), roleResponse.UID)
+	role, err := service.FindById(context.Background(), roleResponse.ID)
 	assert.Nil(t, err)
 	assert.Equal(t, "super_admin", role.Name)
 
@@ -81,7 +81,7 @@ func TestUpdateRoleService(t *testing.T) {
 	roleResponse, _ := Create()
 
 	role := &roleweb.RoleUpdateReq{
-		UID:  roleResponse.UID,
+		ID:   roleResponse.ID,
 		Name: "super_admin_updated",
 	}
 
@@ -95,7 +95,7 @@ func TestUpdateRoleServiceFailed(t *testing.T) {
 	roleResponse, _ := Create()
 
 	role := &roleweb.RoleUpdateReq{
-		UID:  roleResponse.UID,
+		ID:   roleResponse.ID,
 		Name: "",
 	}
 
@@ -109,7 +109,7 @@ func TestUpdateRoleServiceNorFound(t *testing.T) {
 	roleResponse, _ := Create()
 
 	role := &roleweb.RoleUpdateReq{
-		UID:  "salah",
+		ID:   "salah",
 		Name: roleResponse.Name,
 	}
 
@@ -123,10 +123,10 @@ func TestDeleteRoleService(t *testing.T) {
 	Truncate()
 	roleResponse, _ := Create()
 
-	err := service.Delete(context.Background(), roleResponse.UID)
+	err := service.Delete(context.Background(), roleResponse.ID)
 	assert.Nil(t, err)
 
-	_, err = service.FindById(context.Background(), roleResponse.UID)
+	_, err = service.FindById(context.Background(), roleResponse.ID)
 	assert.NotNil(t, err)
 
 }
@@ -136,10 +136,10 @@ func TestDeleteRoleServiceFailed(t *testing.T) {
 	Create()
 
 	roleResponse := domain.Role{
-		UID: "salah",
+		ID: "salah",
 	}
 
-	err := service.Delete(context.Background(), roleResponse.UID)
+	err := service.Delete(context.Background(), roleResponse.ID)
 	assert.NotNil(t, err)
 	assert.Equal(t, "role not found", err.Error())
 }

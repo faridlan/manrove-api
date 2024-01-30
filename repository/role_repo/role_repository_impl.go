@@ -50,7 +50,7 @@ func (repository *RoleRepositoryImpl) Delete(ctx context.Context, db *gorm.DB, r
 
 }
 
-func (repository *RoleRepositoryImpl) FindByUID(ctx context.Context, db *gorm.DB, roleId string) (*domain.Role, error) {
+func (repository *RoleRepositoryImpl) FindByID(ctx context.Context, db *gorm.DB, roleId string) (*domain.Role, error) {
 
 	role := domain.Role{}
 	err := db.First(&role, "uid = ?", roleId).Error

@@ -1,6 +1,6 @@
 package roleweb
 
 type RoleUpdateReq struct {
-	UID  string `json:"uid,omitempty"`
+	ID   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty" validate:"required,gte=3"`
 }

@@ -3,7 +3,7 @@ package domain
 import "gorm.io/gorm"
 
 type Role struct {
-	UID       string         `gorm:"primarykey;column:uid;<-:create"`
+	ID        string         `gorm:"primarykey;column:id;<-:create"`
 	Name      string         `gorm:"column:name"`
 	CreatedAt int64          `gorm:"column:created_at;autoCreateTime:milli"`
 	UpdatedAt int64          `gorm:"column:updated_at;autoCreateTime:milli;autoUpdateTime:milli"`

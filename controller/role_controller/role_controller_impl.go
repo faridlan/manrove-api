@@ -43,7 +43,7 @@ func (controller *RoleControllerImpl) Update(ctx *fiber.Ctx) error {
 
 	request := new(roleweb.RoleUpdateReq)
 	id := ctx.Params("roleId")
-	request.UID = id
+	request.ID = id
 
 	err := ctx.BodyParser(request)
 	if err != nil {

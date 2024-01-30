@@ -96,9 +96,9 @@ func TestFindByIdRepo(t *testing.T) {
 	err := Truncate()
 	helper.PanicIfError(err)
 	roleResponse, _ := Create()
-	fmt.Println(roleResponse.UID)
+	fmt.Println(roleResponse.ID)
 
-	roleResponse, err = repo.FindByUID(context.Background(), db, roleResponse.UID)
+	roleResponse, err = repo.FindByID(context.Background(), db, roleResponse.ID)
 	assert.Nil(t, err)
 	assert.Equal(t, "super_admin", roleResponse.Name)
 
@@ -113,7 +113,7 @@ func TestDeleteRepo(t *testing.T) {
 	err = repo.Delete(context.Background(), db, roleResponse)
 	assert.Nil(t, err)
 
-	_, err = repo.FindByUID(context.Background(), db, roleResponse.UID)
+	_, err = repo.FindByID(context.Background(), db, roleResponse.ID)
 
 	assert.NotNil(t, err)
 
@@ -124,7 +124,7 @@ func TestUpdateRepo(t *testing.T) {
 	helper.PanicIfError(err)
 	roleResponse, _ := Create()
 
-	role, err := repo.FindByUID(context.Background(), db, roleResponse.UID)
+	role, err := repo.FindByID(context.Background(), db, roleResponse.ID)
 
 	assert.Nil(t, err)
 

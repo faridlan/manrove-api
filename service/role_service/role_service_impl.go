@@ -72,7 +72,7 @@ func (service *RoleServiceImpl) Update(ctx context.Context, request *roleweb.Rol
 	tx := service.DB.Begin()
 	defer tx.Rollback()
 
-	role, err := service.RoleRepo.FindByUID(ctx, tx, request.UID)
+	role, err := service.RoleRepo.FindByID(ctx, tx, request.ID)
 	if err != nil {
 		return nil, &exception.NotFoundError{
 			Message: err.Error(),
@@ -99,7 +99,7 @@ func (service *RoleServiceImpl) Delete(ctx context.Context, userId string) error
 	tx := service.DB.Begin()
 	defer tx.Rollback()
 
-	role, err := service.RoleRepo.FindByUID(ctx, tx, userId)
+	role, err := service.RoleRepo.FindByID(ctx, tx, userId)
 	if err != nil {
 		return &exception.NotFoundError{
 			Message: err.Error(),
@@ -119,7 +119,7 @@ func (service *RoleServiceImpl) Delete(ctx context.Context, userId string) error
 
 func (service *RoleServiceImpl) FindById(ctx context.Context, userId string) (*roleweb.RoleResponse, error) {
 
-	user, err := service.RoleRepo.FindByUID(ctx, service.DB, userId)
+	user, err := service.RoleRepo.FindByID(ctx, service.DB, userId)
 
 	if err != nil {
 		return nil, &exception.NotFoundError{
