@@ -1,4 +1,4 @@
-package role
+package roletest
 
 import (
 	"fmt"
@@ -117,7 +117,7 @@ func TestFindByIdRoleControllerNotFound(t *testing.T) {
 	assert.Equal(t, 404, response.StatusCode)
 }
 
-func TestFindAllController(t *testing.T) {
+func TestFindAllRoleController(t *testing.T) {
 	Truncate()
 	Create()
 	app.Get("/roles", controller.FindAll)
@@ -134,7 +134,7 @@ func TestFindAllController(t *testing.T) {
 	fmt.Println(string(byte))
 }
 
-func TestDeleteController(t *testing.T) {
+func TestDeleteRoleController(t *testing.T) {
 	Truncate()
 	rolesResponse, _ := Create()
 	app.Delete("/roles/:roleId", controller.Delete)
@@ -146,7 +146,7 @@ func TestDeleteController(t *testing.T) {
 	assert.Equal(t, 200, response.StatusCode)
 }
 
-func TestDeleteControllerNotFound(t *testing.T) {
+func TestDeleteRoleControllerNotFound(t *testing.T) {
 	Truncate()
 	Create()
 	app.Delete("/roles/:roleId", controller.Delete)
@@ -158,7 +158,7 @@ func TestDeleteControllerNotFound(t *testing.T) {
 	assert.Equal(t, 404, response.StatusCode)
 }
 
-func TestUpdateController(t *testing.T) {
+func TestUpdateRoleController(t *testing.T) {
 	Truncate()
 	roleResponse, _ := Create()
 	app.Put("/roles/:roleId", controller.Update)
@@ -184,7 +184,7 @@ func TestUpdateController(t *testing.T) {
 	fmt.Println(string(byte))
 }
 
-func TestUpdateControllerFailed(t *testing.T) {
+func TestUpdateRoleControllerFailed(t *testing.T) {
 	Truncate()
 	roleResponse, _ := Create()
 	app.Put("/roles/:roleId", controller.Update)
@@ -205,7 +205,7 @@ func TestUpdateControllerFailed(t *testing.T) {
 	assert.Equal(t, 400, response.StatusCode)
 }
 
-func TestUpdateControllerNotFound(t *testing.T) {
+func TestUpdateRoleControllerNotFound(t *testing.T) {
 	Truncate()
 	Create()
 	app.Put("/roles/:roleId", controller.Update)

@@ -97,14 +97,14 @@ func (service *UserServiceImpl) Update(ctx context.Context, request *userweb.Use
 	userResponse.RoleId = request.RoleId
 	userResponse.ImageUrl = request.ImageUrl
 
-	_, err = service.UserRepo.FindUsername(ctx, tx, request.Name)
+	_, err = service.UserRepo.FindUsernameId(ctx, tx, request.Name, request.ID)
 	if err != nil {
 		return nil, &exception.ConflictError{
 			Message: err.Error(),
 		}
 	}
 
-	_, err = service.UserRepo.FindEmail(ctx, tx, request.Email)
+	_, err = service.UserRepo.FindEmailId(ctx, tx, request.Email, request.ID)
 	if err != nil {
 		return nil, &exception.ConflictError{
 			Message: err.Error(),

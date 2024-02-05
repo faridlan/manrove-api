@@ -15,4 +15,6 @@ type UserRepository interface {
 	FindAll(ctx context.Context, db *gorm.DB) ([]*domain.User, error)
 	FindUsername(ctx context.Context, db *gorm.DB, username string) (*domain.User, error)
 	FindEmail(ctx context.Context, db *gorm.DB, email string) (*domain.User, error)
+	FindUsernameId(ctx context.Context, db *gorm.DB, username string, userId string) (*domain.User, error)
+	FindEmailId(ctx context.Context, db *gorm.DB, email string, userId string) (*domain.User, error)
 }

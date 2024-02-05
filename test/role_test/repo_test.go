@@ -1,46 +1,18 @@
-package role
+package roletest
 
 import (
 	"context"
 	"fmt"
 	"testing"
-	"time"
 
+	"github.com/nostracode/mangrove-api/config/db/conn"
 	"github.com/nostracode/mangrove-api/helper"
 	"github.com/nostracode/mangrove-api/model/domain"
 	rolerepo "github.com/nostracode/mangrove-api/repository/role_repo"
 	"github.com/stretchr/testify/assert"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
-func OpenConnection() *gorm.DB {
-
-	dsn := "host=localhost user=nullhakim password=NullHakimNostra123 dbname=mangrove_test port=5432 sslmode=disable TimeZone=Asia/Shanghai"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		Logger:                 logger.Default.LogMode(logger.Info),
-		SkipDefaultTransaction: true,
-	})
-	if err != nil {
-		panic(err)
-	}
-
-	sqlDB, err := db.DB()
-	if err != nil {
-		panic(err)
-	}
-
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetConnMaxLifetime(30 * time.Minute)
-	sqlDB.SetConnMaxIdleTime(5 * time.Minute)
-
-	return db
-
-}
-
-var db = OpenConnection()
+var db = conn.NewDatabase()
 var repo = rolerepo.NewRoleRepository()
 
 func Truncate() error {
@@ -61,7 +33,7 @@ func Create() (*domain.Role, error) {
 	return roleResponse, err
 }
 
-func TestCreateUserRepo(t *testing.T) {
+func TestCreateRoleRepo(t *testing.T) {
 	err := Truncate()
 	helper.PanicIfError(err)
 	role := &domain.Role{
@@ -75,7 +47,7 @@ func TestCreateUserRepo(t *testing.T) {
 	assert.Equal(t, "super_admin", roleResponse.Name)
 }
 
-func TestFindAllRepo(t *testing.T) {
+func TestFindAllRoleRepo(t *testing.T) {
 	err := Truncate()
 	helper.PanicIfError(err)
 
@@ -92,7 +64,7 @@ func TestFindAllRepo(t *testing.T) {
 	assert.Equal(t, 1, len(roles))
 }
 
-func TestFindByIdRepo(t *testing.T) {
+func TestFindByIdRoleRepo(t *testing.T) {
 	err := Truncate()
 	helper.PanicIfError(err)
 	roleResponse, _ := Create()
@@ -104,7 +76,7 @@ func TestFindByIdRepo(t *testing.T) {
 
 }
 
-func TestDeleteRepo(t *testing.T) {
+func TestDeleteRoleRepo(t *testing.T) {
 
 	err := Truncate()
 	helper.PanicIfError(err)
@@ -119,7 +91,7 @@ func TestDeleteRepo(t *testing.T) {
 
 }
 
-func TestUpdateRepo(t *testing.T) {
+func TestUpdateRoleRepo(t *testing.T) {
 	err := Truncate()
 	helper.PanicIfError(err)
 	roleResponse, _ := Create()
