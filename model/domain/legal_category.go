@@ -11,5 +11,5 @@ type LegalCategory struct {
 }
 
 func (u *LegalCategory) TableName() string {
-	return "legal_categpry"
+	return "legal_category"
 }
