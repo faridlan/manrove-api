@@ -5,12 +5,15 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/nostracode/mangrove-api/config/db/conn"
+	financecontroller "github.com/nostracode/mangrove-api/controller/finance_controller"
 	rolecontroller "github.com/nostracode/mangrove-api/controller/role_controller"
 	usercontroller "github.com/nostracode/mangrove-api/controller/user_controller"
 	"github.com/nostracode/mangrove-api/exception"
 	"github.com/nostracode/mangrove-api/helper"
+	financerepo "github.com/nostracode/mangrove-api/repository/finance_repo"
 	rolerepo "github.com/nostracode/mangrove-api/repository/role_repo"
 	userrepo "github.com/nostracode/mangrove-api/repository/user_repo"
+	financeservice "github.com/nostracode/mangrove-api/service/finance_service"
 	roleservice "github.com/nostracode/mangrove-api/service/role_service"
 	userservice "github.com/nostracode/mangrove-api/service/user_service"
 )
@@ -29,6 +32,11 @@ func main() {
 	userRepo := userrepo.NewUserRepository()
 	userService := userservice.NewUserService(userRepo, db, validator)
 	userController := usercontroller.NewUserController(userService)
+
+	//Finance
+	financeRepo := financerepo.NewFinanceRepository()
+	financeService := financeservice.NewFinanceRepository(financeRepo, db, validator)
+	financeController := financecontroller.NewFinanceController(financeService)
 
 	// Create a new Fiber instance
 	app := fiber.New(
@@ -50,6 +58,13 @@ func main() {
 	app.Get("/api/users/:userId", userController.FindById)
 	app.Put("/api/users/:userId", userController.Update)
 	app.Delete("/api/users/:userId", userController.Delete)
+
+	//Endpoint Of Finance
+	app.Post("/api/finances", financeController.Create)
+	app.Get("/api/finances", financeController.FindAll)
+	app.Get("/api/finances/:financeId", financeController.FindById)
+	app.Put("/api/finances/:financeId", financeController.Update)
+	app.Delete("/api/finances/:financeId", financeController.Delete)
 
 	// Start the Fiber app on port 3030
 	err := app.Listen(":3030")
